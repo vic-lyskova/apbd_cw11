@@ -1,5 +1,6 @@
 using Cw10.DTOs;
 using Cw10.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 
@@ -16,6 +17,7 @@ public class PrescriptionsController : ControllerBase
         _dbService = dbService;
     }
 
+    [Authorize]
     [HttpPost("{idDoctor:int}")]
     public async Task<IActionResult> AddPrescription(AddPrescriptionDTO addPrescriptionDto, int idDoctor)
     {

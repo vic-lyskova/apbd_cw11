@@ -25,6 +25,9 @@ public class DbService : IDbService
         return await _context.Patients
             .Include(e => e.Prescriptions)
             .ThenInclude(e => e.PrescriptionMedicaments)
+            .ThenInclude(e => e.Medicament)
+            .Include(e => e.Prescriptions)
+            .ThenInclude(e => e.Doctor)
             .Where(e => e.IdPatient == idPatient)
             .ToListAsync();
     }
@@ -33,7 +36,7 @@ public class DbService : IDbService
     {
         await _context.Patients.AddAsync(new Patient()
         {
-            IdPatient = addPatientDto.IdPatient,
+            // IdPatient = addPatientDto.IdPatient,
             FirstName = addPatientDto.FirstName,
             LastName = addPatientDto.LastName,
             Birthdate = addPatientDto.Birthdate

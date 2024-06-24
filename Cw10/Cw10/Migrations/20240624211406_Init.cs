@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Cw10.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,6 +56,21 @@ namespace Cw10.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Patient", x => x.IdPatient);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Login = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Salt = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RefreshTokenExp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Login);
                 });
 
             migrationBuilder.CreateTable(
@@ -143,6 +158,11 @@ namespace Cw10.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Login", "Password", "RefreshToken", "RefreshTokenExp", "Salt" },
+                values: new object[] { "test", "test", "test", new DateTime(2024, 6, 24, 23, 14, 5, 960, DateTimeKind.Local).AddTicks(8993), "123" });
+
+            migrationBuilder.InsertData(
                 table: "Prescription",
                 columns: new[] { "IdPrescription", "Date", "DueDate", "IdDoctor", "IdPatient" },
                 values: new object[,]
@@ -183,6 +203,9 @@ namespace Cw10.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Prescription_Medicament");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Medicament");

@@ -273,6 +273,41 @@ namespace Cw10.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Cw10.Models.User", b =>
+                {
+                    b.Property<string>("Login")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Salt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Login");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Login = "test",
+                            Password = "test",
+                            RefreshToken = "test",
+                            RefreshTokenExp = new DateTime(2024, 6, 24, 23, 14, 5, 960, DateTimeKind.Local).AddTicks(8993),
+                            Salt = "123"
+                        });
+                });
+
             modelBuilder.Entity("Cw10.Models.Prescription", b =>
                 {
                     b.HasOne("Cw10.Models.Doctor", "Doctor")

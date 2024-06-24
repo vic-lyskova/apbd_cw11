@@ -1,5 +1,6 @@
 using Cw10.DTOs;
 using Cw10.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cw10.Controllers;
@@ -15,6 +16,7 @@ public class PatientsController : ControllerBase
         _dbService = dbService;
     }
 
+    [Authorize]
     [HttpGet("{idPatient:int}")]
     public async Task<IActionResult> GetPatient(int idPatient)
     {
